@@ -11,12 +11,15 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 kb = ReplyKeyboardMarkup(resize_keyboard=True)
 button_1 = KeyboardButton(text='Рассчитать')
 button_2 = KeyboardButton(text='Информация')
+button_3 = KeyboardButton(text='Купить')
 kb.add(button_1)
 kb.add(button_2)
+kb.add(button_3)
 
 ikb = InlineKeyboardMarkup()
 i_button_1 = InlineKeyboardButton(text='Рассчитать норму калорий', callback_data='calories')
 i_button_2 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
+ikb.row(i_button_1, i_button_2)
 
 catalog_kb = InlineKeyboardMarkup(resize_keyboard=True)
 button1 = InlineKeyboardButton(text='Продукт 1', callback_data='product_buying')
@@ -28,25 +31,23 @@ catalog_kb.insert(button2)
 catalog_kb.insert(button3)
 catalog_kb.insert(button4)
 
-buy_kb = ReplyKeyboardMarkup(resize_keyboard=True)
-button = KeyboardButton(text='Рассчитать')
-button22 = KeyboardButton(text='Информация')
-button33 = KeyboardButton(text='Купить')
-buy_kb.insert(button)
-buy_kb.insert(button22)
-buy_kb.insert(button33)
 
-@dp.message_handler(text = "о нас")
+@dp.message_handlers(text = "Купить")
 async def price(message):
-    with open('filtes/1.png', "rb") as img:
-        await message.answer_photo(img, f'Название: Product1 | Описание: описание <number> | Цена: 100')
-    with open('filtes/2.png', "rb") as img:
-        await message.answer_photo(img, f'Название: Product2 | Описание: описание <number> | Цена: 200')
-    with open('filtes/3.png', "rb") as img:
-        await message.answer_photo(img, f'Название: Product3 | Описание: описание <number> | Цена: 300')
-    with open('filtes/4.png', "rb") as img:
-        await message.answer_photo(img, f'Название: Product4 | Описание: описание <number> | Цена: 400')
+    with open('1.png', "rb") as img:
+        await message.answer_photo(img, 'Название: Product1 | Описание: описание 1 | Цена: 100')
+    with open('2.png', "rb") as img:
+        await message.answer_photo(img, 'Название: Product2 | Описание: описание 2 | Цена: 200')
+    with open('3.png', "rb") as img:
+        await message.answer_photo(img, 'Название: Product3 | Описание: описание 3 | Цена: 300')
+    with open('4.png', "rb") as img:
+        await message.answer_photo(img, 'Название: Product4 | Описание: описание 4 | Цена: 400')
     await message.answer("Выберите продукт для покупки:", reply_markup=catalog_kb)
+
+@dp.callback_query_handler(text='product_buying')
+async def send_confirm_message(call):
+    await call.message.answer("Вы успешно приобрели продукт!")
+    await call.answer()
 
 class UserState(StatesGroup):
     age = State()

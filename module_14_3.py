@@ -19,10 +19,10 @@ i_button_1 = InlineKeyboardButton(text='Рассчитать норму кало
 i_button_2 = InlineKeyboardButton(text='Формулы расчёта', callback_data='formulas')
 
 catalog_kb = InlineKeyboardMarkup(resize_keyboard=True)
-button1 = InlineKeyboardButton(Text='Продукт 1', callback_data='product_buying')
-button2 = InlineKeyboardButton(Text='Продукт 2', callback_data='product_buying')
-button3 = InlineKeyboardButton(Text='Продукт 3', callback_data='product_buying')
-button4 = InlineKeyboardButton(Text='Продукт 4', callback_data='product_buying')
+button1 = InlineKeyboardButton(text='Продукт 1', callback_data='product_buying')
+button2 = InlineKeyboardButton(text='Продукт 2', callback_data='product_buying')
+button3 = InlineKeyboardButton(text='Продукт 3', callback_data='product_buying')
+button4 = InlineKeyboardButton(text='Продукт 4', callback_data='product_buying')
 catalog_kb.insert(button1)
 catalog_kb.insert(button2)
 catalog_kb.insert(button3)
@@ -36,7 +36,7 @@ buy_kb.insert(button)
 buy_kb.insert(button22)
 buy_kb.insert(button33)
 
-@dp.message_handlers(text = "о нас")
+@dp.message_handler(text = "о нас")
 async def price(message):
     with open('filtes/1.png', "rb") as img:
         await message.answer_photo(img, f'Название: Product1 | Описание: описание <number> | Цена: 100')
